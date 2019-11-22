@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.appoint.dao.AppointmentListDao">
+
+    <select id="queryAll" resultType = "AppointmentList">
+        select appoint_id, doctor_id, doctor_name, start_time, end_time, state
+        from appointmentList
+        order by doctor_id
+        limit #{offset}, #{limit}
+    </select>
+
+    <select id="queryById" resultType="AppointmentList">
+        select appoint_id, doctor_id, doctor_name, start_time, end_time, state
+        from appointmentList
+        where appoint_id = #{appointId}
+    </select>
+
+    <select id="queryByName" resultType="AppointmentList">
+        select appoint_id, doctor_id, doctor_name, start_time, end_time, state
+        from appointmentlist
+        where doctor_name = #{doctorName}
+        order by start_time
+    </select>
+
+    <select id="queryByStartTime" resultType="AppointmentList">
+        select appoint_id, doctor_id, doctor_name, start_time, end_time, state
+        from appointmentlist
+        where start_time = #{startTime}
+        order by doctor_id
+    </select>
+
+    <select id="queryByEndTime" resultType="AppointmentList">
+        select appoint_id, doctor_id, doctor_name, start_time, end_time, state
+        from appointmentlist
+        where end_time = #{endTime}
+        order by doctor_id
+    </select>
+
+    <select id="queryByState" resultType="AppointmentList">
+        select appoint_id, doctor_id, doctor_name, start_time, end_time, state
+        from appointmentlist
+        where state = #{state}
+        order by doctor_id
+    </select>
+    
+    <insert id="insertAppointmentList">
+        insert ignore into appointmentList(doctor_id, doctor_name, start_time, end_time, state)
+        values (#{doctorId}, #{doctorName}, #{startTime}, #{endTime}, 0)
+    </insert>
+
+    <update id="updateState">
+        update appointmentList
+        set
+            state = 1
+        where
+              appoint_id = #{appointId}
+        and
+              state = 0
+    </update>
+
+    <delete id="deleteAppointmentList">
+        delete from appointmentlist
+        where
+            appoint_id = #{appointId}
+    </delete>
+</mapper>
